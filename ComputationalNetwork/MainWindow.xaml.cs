@@ -15,14 +15,32 @@ using System.Windows.Shapes;
 
 namespace ComputationalNetwork
 {
+	struct Attribute
+	{
+		string m_type;
+		string m_value;
+	}
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+		Attribute[] m_assumptions;
+		Attribute[] m_conclusions;
+
         public MainWindow()
         {
             InitializeComponent();
         }
-    }
+
+		private void AddAttribute_Click(object sender, RoutedEventArgs e)
+		{
+			
+		}
+
+		private void Go_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+	}
 }

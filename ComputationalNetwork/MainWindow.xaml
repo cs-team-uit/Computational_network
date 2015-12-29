@@ -6,7 +6,7 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" FontWeight="Bold" WindowStartupLocation="CenterScreen" Title="Giải bài toán tam giác">
     <Grid>
         <DockPanel HorizontalAlignment="Left" Height="213" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="361">
-            <ComboBox VerticalAlignment="Stretch" Width="119" Margin="0,91,0,100">
+            <ComboBox VerticalAlignment="Stretch" Width="119" Margin="0,91,0,100" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="a" HorizontalAlignment="Left" Width="117"/>
                 <ComboBoxItem Content="b" HorizontalAlignment="Left" Width="117"/>
                 <ComboBoxItem Content="c" HorizontalAlignment="Left" Width="117"/>
@@ -49,11 +49,11 @@
             </ListView>
         </DockPanel>
         <Label Content="Thêm yếu tố tam giác" HorizontalAlignment="Left" Height="29" Margin="23,62,0,0" VerticalAlignment="Top" Width="148" FontWeight="Bold"/>
-        <Button x:Name="AddAttribute" Content="Thêm" HorizontalAlignment="Left" Margin="78,164,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="AddAttribute" Content="Thêm" HorizontalAlignment="Left" Margin="78,164,0,0" VerticalAlignment="Top" Width="75" Click="AddAttribute_Click"/>
         <Label Content="Kết quả" HorizontalAlignment="Left" Margin="376,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label Content="Giả thiết" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label Content="Các bước giải" HorizontalAlignment="Left" Margin="389,236,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Button x:Name="Go" Content="Giải" HorizontalAlignment="Left" Margin="234,164,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignRaisedDarkButton}"/>
+        <Button x:Name="Go" Content="Giải" HorizontalAlignment="Left" Margin="234,164,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignRaisedDarkButton}" Click="Go_Click"/>
         <Label Content="Kết luận" HorizontalAlignment="Left" Margin="217,228,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
     </Grid>
