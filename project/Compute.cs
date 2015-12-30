@@ -173,13 +173,13 @@ namespace ComputationalNetwork
 			string _strPostfix = "";
 
 			string _temp_str = "";
-			StreamReader sr = new StreamReader(@"..\data\Rules.cs");
+			StreamReader sr = new StreamReader(Statics.RULES_DIRECTORY);
 			for (int i = 0; i < _indexExp + 1; i++)
 				_temp_str = sr.ReadLine();
 			sr.Close();
 			sr.Dispose();
 
-			_temp_str = _temp_str.Substring(_temp_str.IndexOf('.') + 1);
+			_temp_str = _temp_str.Substring(_temp_str.IndexOf(Statics.RULED_DELIMITER) + 1);
 
 			int _pos = 0;
 
@@ -196,22 +196,7 @@ namespace ComputationalNetwork
 					//MessageBox.Show("\'" + _strOp + "\'");
 
 					switch (_strOp)
-					{
-						case "A":
-						case "B":
-						case "C":
-						case "a":
-						case "b":
-						case "c":
-						case "ha":
-						case "hb":
-						case "hc":
-						case "p":
-						case "S":
-						case "180":
-						case "2":
-							_strPostfix += _strOp + " ";
-							break;
+					{						
 						case "+":
 						case "-":
 							while (_stack_str.Count != 0 && _stack_str.Peek() != "(")
@@ -249,6 +234,9 @@ namespace ComputationalNetwork
 									_strPostfix += _stack_str.Pop() + " ";
 								_stack_str.Pop();
 							}
+							break;
+						default:
+							_strPostfix += _strOp + " ";
 							break;
 					}
 				}

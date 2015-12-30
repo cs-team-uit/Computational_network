@@ -253,13 +253,13 @@ namespace ComputationalNetwork
 		private string getFormula(int _indexExp)
 		{
 			string _temp_str = "";
-			StreamReader sr = new StreamReader(@"..\data\Rules.cs");
+			StreamReader sr = new StreamReader(Statics.RULES_DIRECTORY);
 			for (int i = 0; i < _indexExp + 1; i++)
 				_temp_str = sr.ReadLine();
 			sr.Close();
 			sr.Dispose();
 
-			_temp_str = _temp_str.Substring(_temp_str.IndexOf('.') + 1);
+			_temp_str = _temp_str.Substring(_temp_str.IndexOf(Statics.RULED_DELIMITER) + 1);
 
 			return _temp_str;
 		}

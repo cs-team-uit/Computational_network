@@ -103,10 +103,11 @@ namespace ComputationalNetwork
 			}
 
 			m_attributesInfo[0].m_value = "90";
+			m_attributesInfo[1].m_value = "50";
 			m_attributesInfo[4].m_value = "3";
 			m_attributesInfo[5].m_value = "4";
 
-			m_attributesInfo[3].m_value = "?";
+			m_attributesInfo[6].m_value = "?";
 		}
 
 		//initialize
@@ -122,7 +123,7 @@ namespace ComputationalNetwork
 		//Load rules from file
 		private void LoadFile()
 		{
-			StreamReader sr = new StreamReader(@"..\data\Rules.cs");
+			StreamReader sr = new StreamReader(Statics.RULES_DIRECTORY);
 			string _line;
 			//read each line
 			while ((_line = sr.ReadLine()) != null)
@@ -146,7 +147,7 @@ namespace ComputationalNetwork
 
 			int _mark_rule = 0;
 
-			while (_rule[_pos == 0 ? _pos : _pos - 1] != '.')
+			while (_rule[_pos == 0 ? _pos : _pos - 1] != Statics.RULED_DELIMITER)
 			{
 				if (_rule[_pos] >= 'A' && _rule[_pos] <= 'z')
 					_len_arg++;
