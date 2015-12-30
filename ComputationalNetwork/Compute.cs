@@ -157,12 +157,12 @@ namespace ComputationalNetwork
 
 			for (int i = 0; i < num_arg; i++)
 			{
+				listValue.Add(-1);
+
 				if (m_attributesInfo[i].m_value != "" && m_attributesInfo[i].m_value != "?")
 				{
 					listValue[i] = double.Parse(m_attributesInfo[i].m_value);
 				}
-				else
-					listValue.Add(-1);
 			}
 		}
 
@@ -173,7 +173,7 @@ namespace ComputationalNetwork
 			string _strPostfix = "";
 
 			string _temp_str = "";
-			StreamReader sr = new StreamReader("Rules.txt");
+			StreamReader sr = new StreamReader(@"..\..\Rules.txt");
 			for (int i = 0; i < _indexExp + 1; i++)
 				_temp_str = sr.ReadLine();
 			sr.Close();

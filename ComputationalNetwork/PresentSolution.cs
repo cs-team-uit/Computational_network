@@ -252,7 +252,7 @@ namespace ComputationalNetwork
 		private string getFormula(int _indexExp)
 		{
 			string _temp_str = "";
-			StreamReader sr = new StreamReader("Rules.txt");
+			StreamReader sr = new StreamReader(@"..\..\Rules.txt");
 			for (int i = 0; i < _indexExp + 1; i++)
 				_temp_str = sr.ReadLine();
 			sr.Close();

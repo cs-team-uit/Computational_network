@@ -34,7 +34,7 @@ namespace ComputationalNetwork
     public partial class MainWindow : Window
     {
 		//save used rules
-		List<int> list_used_rule = new List<int>();
+		public List<int> list_used_rule = new List<int>();
 
 		public List<int> ListRulesUsed
 		{
@@ -102,8 +102,7 @@ namespace ComputationalNetwork
 				m_attributesInfo.Add(_attribute);
 			}
 
-			m_attributesInfo[1].m_value = "50";
-			m_attributesInfo[2].m_value = "40";
+			m_attributesInfo[0].m_value = "90";
 			m_attributesInfo[4].m_value = "3";
 			m_attributesInfo[5].m_value = "4";
 
@@ -235,7 +234,7 @@ namespace ComputationalNetwork
 
 				if (_isSolve)
 				{
-					m_calculate = new Compute(m_attributesInfo, ListRules, ListRulesUsed);
+					m_calculate = new Compute(m_attributesInfo, ListRules, list_used_rule);
 					m_calculate.ProcessCaculate();
 
 					myPresent = new PresentSolution(m_calculate, ListKnownInit, IndexResult);
@@ -250,17 +249,18 @@ namespace ComputationalNetwork
 
 			for (int i = 0; i < num_arg; i++)
 			{
-				if (m_attributesInfo[i].m_value != "")
+				if (m_attributesInfo[i].m_value != "" && m_attributesInfo[i].m_value != "?")
 				{
 					ListKnownInit.Add(0);
-
-					if (m_attributesInfo[i].m_value != "?")
+				}
+				else
+				{
+					ListKnownInit.Add(-1);
+					if (m_attributesInfo[i].m_value == "?")
 					{
 						index_result = i;
-                    }
-                }
-				else
-					ListKnownInit.Add(-1);
+					}
+				}
 			}
 
 			return true;
