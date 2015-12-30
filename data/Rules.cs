@@ -27,6 +27,6 @@ b,B,A->a.b * sin A / sin B
 b,B,C->c.b * sin C / sin B
 c,C,A->a.c * sin A / sin C
 c,C,B->b.c * sin B / sin C
-a,b,C->c.a * a + b * b - 2 * a * b * cos C
-a,c,B->b.a * a + c * c - 2 * a * c * cos B
-b,c,A->a.b * b + c * c - 2 * b * c * cos A
+a,b,C->c.sqrt ( a * a + b * b - 2 * a * b * cos C )
+a,c,B->b.sqrt ( a * a + c * c - 2 * a * c * cos B )
+b,c,A->a.sqrt ( b * b + c * c - 2 * b * c * cos A )

@@ -122,7 +122,7 @@ namespace ComputationalNetwork
 		//Load rules from file
 		private void LoadFile()
 		{
-			StreamReader sr = new StreamReader(@"..\..\Rules.txt");
+			StreamReader sr = new StreamReader(@"..\data\Rules.cs");
 			string _line;
 			//read each line
 			while ((_line = sr.ReadLine()) != null)
@@ -239,6 +239,9 @@ namespace ComputationalNetwork
 
 					myPresent = new PresentSolution(m_calculate, ListKnownInit, IndexResult);
 					myPresent.SolveProblem();
+
+					Requirements.Text = myPresent._problemPresentation;
+					Results.Text = myPresent._strForwardCharning;
 				}
 			}
 		}

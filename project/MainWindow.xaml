@@ -27,10 +27,10 @@
             <TextBox TextWrapping="Wrap" Text="" Width="120" Margin="0,98,0,90"/>
         </DockPanel>
         <DockPanel HorizontalAlignment="Left" Height="213" LastChildFill="False" Margin="376,10,0,0" VerticalAlignment="Top" Width="377">
-            <TextBox Height="185" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="375" Margin="0,28,0,0"/>
+            <TextBox x:Name="Requirements" Height="185" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="375" Margin="0,28,0,0"/>
         </DockPanel>
         <DockPanel HorizontalAlignment="Left" Height="203" LastChildFill="False" Margin="376,228,0,0" VerticalAlignment="Top" Width="377">
-            <TextBox Height="178" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="377" Margin="0,25,0,0"/>
+            <TextBox x:Name="Results" Height="178" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="377" Margin="0,25,0,0"/>
         </DockPanel>
         <DockPanel HorizontalAlignment="Left" Height="203" LastChildFill="False" Margin="10,228,0,0" VerticalAlignment="Top" Width="361">
             <ListView Height="175" VerticalAlignment="Top" Width="201" Margin="0,28,0,0">

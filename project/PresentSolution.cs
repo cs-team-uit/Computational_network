@@ -15,6 +15,9 @@ namespace ComputationalNetwork
 
 		const int num_arg = 11;
 
+		public string _problemPresentation = "";
+		public string _strForwardCharning = "";
+
 
 		public PresentSolution(Compute _cal, List<int> ListKnownInit, int IndexResult)
 		{
@@ -32,7 +35,6 @@ namespace ComputationalNetwork
 		//Present Problem
 		private void presentProblem()
 		{
-			string _problemPresentation = "";
 			_problemPresentation += "\t\t-------------------- BÀI TOÁN TAM GIÁC -------------------- \n\n\n"
 				+ "Giả thiết: \n";
 			for (int i = 0; i < num_arg; i++)
@@ -137,7 +139,6 @@ namespace ComputationalNetwork
 		//Forward Charning
 		private void presentForwardCharningSolution()
 		{
-			string _strForwardCharning = "";
 			for (int i = 0; i < problemCaculate.listRulesUsed.Count; i++)
 			{
 				if (problemCaculate.listRulesUsed.Count > 1)
@@ -252,7 +253,7 @@ namespace ComputationalNetwork
 		private string getFormula(int _indexExp)
 		{
 			string _temp_str = "";
-			StreamReader sr = new StreamReader(@"..\..\Rules.txt");
+			StreamReader sr = new StreamReader(@"..\data\Rules.cs");
 			for (int i = 0; i < _indexExp + 1; i++)
 				_temp_str = sr.ReadLine();
 			sr.Close();

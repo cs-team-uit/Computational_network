@@ -173,7 +173,7 @@ namespace ComputationalNetwork
 			string _strPostfix = "";
 
 			string _temp_str = "";
-			StreamReader sr = new StreamReader(@"..\..\Rules.txt");
+			StreamReader sr = new StreamReader(@"..\data\Rules.cs");
 			for (int i = 0; i < _indexExp + 1; i++)
 				_temp_str = sr.ReadLine();
 			sr.Close();
