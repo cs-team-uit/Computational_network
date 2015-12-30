@@ -6,13 +6,25 @@ using System.Threading.Tasks;
 
 namespace ComputationalNetwork
 {
+	public class Attribute
+	{
+		public int m_attribute;
+		public string m_value;
+
+		public void Init(int id, string value)
+		{
+			m_attribute = id;
+			m_value = value;
+		}
+	}
+
 	public static class Statics
 	{
-		public static string RULES_DIRECTORY = @"..\..\data\Rules.cs";
-		public static Char RULED_DELIMITER = '.';
-		public static string EMPTY_STR = "";
+		public static readonly string RULES_DIRECTORY = @"..\..\data\Rules.cs";
+		public static readonly Char RULED_DELIMITER = '.';
+		public static readonly string EMPTY_STR = "";
 
-		public static string[] ATTRIBUTE =
+		public static readonly string[] ATTRIBUTE =
 		{
 			"A",
 			"B",
@@ -26,5 +38,12 @@ namespace ComputationalNetwork
 			"p",
 			"S"
 		};
-    }
+
+		public static readonly int NOT_RELATE = -1;
+		public static readonly int IN_ASSUMPTIONS = 0;
+		public static readonly int IN_CONCLUSION = 1;
+
+		public static readonly int NOT_USED_YET = -1;
+		public static readonly int USED = 0;
+	}
 }

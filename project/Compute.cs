@@ -1,250 +1,283 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ComputationalNetwork
 {
 	public class Compute
 	{
-		const int num_arg = 11;
+		List<string> m_operators;
 
-		List<string> listOperator;
-		public List<int> listRulesUsed;
-		List<double> listValue;
-		public List<double> ListValue
+		List<double>		m_listValues;
+		public List<double> ListValues
 		{
-			get { return listValue; }
-			set { listValue = value; }
+			get { return m_listValues; }
+			set { m_listValues = value; }
 		}
-		public List<List<int>> listRules;
 
-		public List<Attribute> m_attributesInfo;
+		public List<int>		m_listRulesUsed;
+		public List<List<int>>	m_listRules;
+
+		public List<Attribute>	m_attributesInfo;
 
 		public Compute(List<Attribute> attributesInfo, List<List<int>> ListRules, List<int> ListRulesUsed)
 		{
 			m_attributesInfo = attributesInfo;
+			m_listRulesUsed = ListRulesUsed;
+			m_listRules = ListRules;
 
-			listRulesUsed = ListRulesUsed;
-
-			listRules = ListRules;
-
-			listValue = new List<double>();
-
-			listOperator = new List<string>();
+			m_listValues = new List<double>();
+			m_operators = new List<string>();
 		}
 
 		public void ProcessCaculate()
 		{
-			//get value from user
-			getValue();
+			m_listValues = new List<double>();
+			Stack<double> _stackProcessing = new Stack<double>();
 
-			Stack<double> _stack_value = new Stack<double>();
-			for (int i = 0; i < listRulesUsed.Count; i++)
+			for (int i = 0; i < Statics.ATTRIBUTE.Length; i++)
 			{
-				string _postfixFomular = convertExpression(listRulesUsed[i]);
+				m_listValues.Add(Statics.NOT_RELATE);
 
-				int _pos = 0;
+				if (m_attributesInfo[i].m_value != null && m_attributesInfo[i].m_value != "?")
+					m_listValues[i] = double.Parse(m_attributesInfo[i].m_value);
+			}
+
+
+			for (int i = 0; i < m_listRulesUsed.Count; i++)
+			{
+				string _postfixFomular = convertToPostfixExpression(m_listRulesUsed[i]);
+				int _currentPosition = 0;
+
 				for (int j = 0; j < _postfixFomular.Length; j++)
 				{
-					string _temp_str = "";
-					double _temp1, _temp2;
+					string _currentExpress = "";
+
 					if (_postfixFomular[j] == ' ')
 					{
-						_temp_str = _postfixFomular.Substring(_pos, j - _pos);
-						_pos = j + 1;
+						_currentExpress = _postfixFomular.Substring(_currentPosition, j - _currentPosition);
+						_currentPosition = j + 1;
 
-						switch (_temp_str)
+						switch (_currentExpress)
 						{
-							case "A":
-								_stack_value.Push(listValue[0]);
-								break;
-							case "B":
-								_stack_value.Push(listValue[1]);
-								break;
-							case "C":
-								_stack_value.Push(listValue[2]);
-								break;
-							case "a":
-								_stack_value.Push(listValue[3]);
-								break;
-							case "b":
-								_stack_value.Push(listValue[4]);
-								break;
-							case "c":
-								_stack_value.Push(listValue[5]);
-								break;
-							case "ha":
-								_stack_value.Push(listValue[6]);
-								break;
-							case "hb":
-								_stack_value.Push(listValue[7]);
-								break;
-							case "hc":
-								_stack_value.Push(listValue[8]);
-								break;
-							case "p":
-								_stack_value.Push(listValue[9]);
-								break;
-							case "S":
-								_stack_value.Push(listValue[10]);
-								break;
 							case "180":
-								_stack_value.Push(180);
+								_stackProcessing.Push(180);
 								break;
 							case "2":
-								_stack_value.Push(2);
+								_stackProcessing.Push(2);
 								break;
 							case "+":
-								_temp2 = _stack_value.Pop();
-								_temp1 = _stack_value.Pop();
-								_stack_value.Push(_temp1 + _temp2);
+								_stackProcessing.Push(_stackProcessing.Pop() + _stackProcessing.Pop());
 								break;
 							case "-":
-								_temp2 = _stack_value.Pop();
-								_temp1 = _stack_value.Pop();
-								_stack_value.Push(_temp1 - _temp2);
+								_stackProcessing.Push(- _stackProcessing.Pop() + _stackProcessing.Pop());
 								break;
 							case "*":
-								_temp2 = _stack_value.Pop();
-								_temp1 = _stack_value.Pop();
-								_stack_value.Push(_temp1 * _temp2);
+								_stackProcessing.Push(_stackProcessing.Pop() * _stackProcessing.Pop());
 								break;
 							case "/":
-								_temp2 = _stack_value.Pop();
-								_temp1 = _stack_value.Pop();
-								_stack_value.Push(_temp1 / _temp2);
+								_stackProcessing.Push(_stackProcessing.Pop() * (1 / _stackProcessing.Pop()));
 								break;
 							case "sqrt":
-								_temp2 = _stack_value.Pop();
-								_stack_value.Push(Math.Sqrt(_temp2));
+								_stackProcessing.Push(Math.Sqrt(_stackProcessing.Pop()));
 								break;
 							case "sin":
-								_temp2 = _stack_value.Pop();
-								//convert to radian
-								_temp2 = Math.PI * (_temp2 / 180);
-								_stack_value.Push(Math.Sin(_temp2));
+								_stackProcessing.Push(Math.Sin(Math.PI * (_stackProcessing.Pop() / 180)));
 								break;
 							case "cos":
-								_temp2 = _stack_value.Pop();
-								//convert to radian
-								_temp2 = Math.PI * (_temp2 / 180);
-								_stack_value.Push(Math.Cos(_temp2));
+								_stackProcessing.Push(Math.Cos(Math.PI * (_stackProcessing.Pop() / 180)));
 								break;
 							case "arcsin":
-								_temp2 = _stack_value.Pop();
-								_stack_value.Push(Math.Round((Math.Asin(_temp2) / Math.PI * 180), 2));
+								_stackProcessing.Push(Math.Round((Math.Asin(_stackProcessing.Pop()) / Math.PI * 180), 2));
+								break;
+							default:
+								int _index = System.Array.FindIndex(Statics.ATTRIBUTE, item => item == _currentExpress);
+								_stackProcessing.Push(m_listValues[_index]);
 								break;
 						}
 					}
 				}
 
-				for (int j = 0; j < num_arg; j++)
+				for (int j = 0; j < Statics.ATTRIBUTE.Length; j++)
 				{
-					if (listRules[listRulesUsed[i]][j] == 1)
+					if (m_listRules[m_listRulesUsed[i]][j] == 1)
 					{
-						listValue[j] = Math.Round(_stack_value.Pop(), 2);
-						Console.WriteLine(listValue[j]);
+						m_listValues[j] = Math.Round(_stackProcessing.Pop(), 2);
+						Console.WriteLine(m_listValues[j]);
 						break;
 					}
 				}
 			}
 		}
 
-		//get value from user
-		private void getValue()
+		private string convertToPostfixExpression(int expressionIndex)
 		{
-			listValue = new List<double>();
+			Stack<string> _stackStr = new Stack<string>();
+			
+			string _infixExpression = File.ReadLines(Statics.RULES_DIRECTORY).Skip(expressionIndex).Take(1).First();
+			string _postfixExpression = "";
 
-			for (int i = 0; i < num_arg; i++)
+			_infixExpression = _infixExpression.Substring(_infixExpression.IndexOf(Statics.RULED_DELIMITER) + 1);
+
+			int _currentPosition = 0;
+
+			for (int i = 0; i < _infixExpression.Length; i++)
 			{
-				listValue.Add(-1);
-
-				if (m_attributesInfo[i].m_value != "" && m_attributesInfo[i].m_value != "?")
+				if (_infixExpression[i] == ' ' || i == _infixExpression.Length - 1)
 				{
-					listValue[i] = double.Parse(m_attributesInfo[i].m_value);
-				}
-			}
-		}
+					string _currentElement = "";
 
-		//convert expression from Infix to Postfix
-		private string convertExpression(int _indexExp)
-		{
-			Stack<string> _stack_str = new Stack<string>();
-			string _strPostfix = "";
+					if (_infixExpression.Length - 1 != i)
+						_currentElement = _infixExpression.Substring(_currentPosition, i - _currentPosition);
+					else
+						_currentElement = _infixExpression.Substring(_currentPosition, i - _currentPosition + 1);
 
-			string _temp_str = "";
-			StreamReader sr = new StreamReader(Statics.RULES_DIRECTORY);
-			for (int i = 0; i < _indexExp + 1; i++)
-				_temp_str = sr.ReadLine();
-			sr.Close();
-			sr.Dispose();
+					_currentPosition = i + 1;
 
-			_temp_str = _temp_str.Substring(_temp_str.IndexOf(Statics.RULED_DELIMITER) + 1);
-
-			int _pos = 0;
-
-			for (int i = 0; i < _temp_str.Length; i++)
-			{
-				if (_temp_str[i] == ' ' || i == _temp_str.Length - 1)
-				{
-					//get operator and argument
-					string _strOp = "";
-					_strOp = (i != (_temp_str.Length - 1) ? _temp_str.Substring(_pos, i - _pos) :
-							_temp_str.Substring(_pos, i - _pos + 1));
-					_pos = i + 1;
-
-					//MessageBox.Show("\'" + _strOp + "\'");
-
-					switch (_strOp)
+					switch (_currentElement)
 					{						
 						case "+":
 						case "-":
-							while (_stack_str.Count != 0 && _stack_str.Peek() != "(")
-								_strPostfix += _stack_str.Pop() + " ";
-							_stack_str.Push(_strOp);
+							while (_stackStr.Count != 0 && _stackStr.Peek() != "(")
+								_postfixExpression += _stackStr.Pop() + " ";
+							_stackStr.Push(_currentElement);
 							break;
 						case "*":
 						case "/":
-							while (_stack_str.Count != 0)
-								if (_stack_str.Peek() == "*" || _stack_str.Peek() == "/"
-								|| _stack_str.Peek() == "sin" || _stack_str.Peek() == "cos"
-								|| _stack_str.Peek() == "arcsin" || _stack_str.Peek() == "sqrt")
-									_strPostfix += _stack_str.Pop() + " ";
+							while (_stackStr.Count != 0)
+								if (_stackStr.Peek() == "*" || _stackStr.Peek() == "/"
+								|| _stackStr.Peek() == "sin" || _stackStr.Peek() == "cos"
+								|| _stackStr.Peek() == "arcsin" || _stackStr.Peek() == "sqrt")
+									_postfixExpression += _stackStr.Pop() + " ";
 								else
 									break;
-							_stack_str.Push(_strOp);
+							_stackStr.Push(_currentElement);
 							break;
 						case "sin":
 						case "cos":
 						case "arcsin":
 						case "sqrt":
-							if (_stack_str.Count != 0)
-								while (_stack_str.Peek() == "sin" || _stack_str.Peek() == "cos"
-									|| _stack_str.Peek() == "arcsin" || _stack_str.Peek() == "sqrt")
-									_strPostfix += _stack_str.Pop() + " ";
-							_stack_str.Push(_strOp);
+							if (_stackStr.Count != 0)
+								while (_stackStr.Peek() == "sin" || _stackStr.Peek() == "cos"
+									|| _stackStr.Peek() == "arcsin" || _stackStr.Peek() == "sqrt")
+									_postfixExpression += _stackStr.Pop() + " ";
+							_stackStr.Push(_currentElement);
 							break;
 						case "(":
-							_stack_str.Push(_strOp);
+							_stackStr.Push(_currentElement);
 							break;
 						case ")":
-							if (_stack_str.Count != 0)
+							if (_stackStr.Count != 0)
 							{
-								while (_stack_str.Peek() != "(")
-									_strPostfix += _stack_str.Pop() + " ";
-								_stack_str.Pop();
+								while (_stackStr.Peek() != "(")
+									_postfixExpression += _stackStr.Pop() + " ";
+								_stackStr.Pop();
 							}
 							break;
 						default:
-							_strPostfix += _strOp + " ";
+							_postfixExpression += _currentElement + " ";
 							break;
 					}
 				}
 			}
-			while (_stack_str.Count != 0)
-				_strPostfix += _stack_str.Pop() + " ";
+			while (_stackStr.Count != 0)
+				_postfixExpression += _stackStr.Pop() + " ";
 
-			return _strPostfix;
+			return _postfixExpression;
 		}
-	}
+
+		public static List<int> ForwardChaining(List<List<int>> rulesList, List<int> knownList, int conclusion)
+		{
+			List<int> _listRulesUsed = new List<int>();
+
+			List<int> _rulesListState = new List<int>();
+			for (int i = 0; i < rulesList.Count; i++)
+			{
+				_rulesListState.Add(Statics.NOT_USED_YET);
+			}
+
+			while (knownList[conclusion] == Statics.NOT_RELATE)
+			{
+				bool _executed = false;
+
+				for (int i = 0; i < rulesList.Count; i++)
+				{
+					if (_rulesListState[i] == Statics.NOT_USED_YET)
+					{
+						bool _canUseThis = true;
+
+						for (int j = 0; j < Statics.ATTRIBUTE.Length; j++)
+						{
+							if ((rulesList[i][j] == Statics.IN_ASSUMPTIONS && knownList[j] != Statics.IN_ASSUMPTIONS) ||
+								(rulesList[i][j] == Statics.IN_CONCLUSION && knownList[j] == Statics.IN_ASSUMPTIONS))
+							{
+								_canUseThis = false;
+								break;
+							}
+						}
+
+						if (_canUseThis)
+						{
+							for (int j = 0; j < Statics.ATTRIBUTE.Length; j++)
+							{
+								if (rulesList[i][j] == Statics.IN_CONCLUSION)
+								{
+									knownList[j] = Statics.IN_ASSUMPTIONS;
+									break;
+								}
+							}
+
+							_executed = true;
+							_listRulesUsed.Add(i);
+
+							if (knownList[conclusion] == Statics.IN_ASSUMPTIONS)
+								break;
+
+							_rulesListState[i] = Statics.USED;
+						}
+					}
+				}
+
+				if (!_executed)
+				{
+					_listRulesUsed.Clear();
+					break;
+				}
+			}
+
+			_listRulesUsed = OptimizeListRulesUsed(_listRulesUsed, rulesList);
+
+			return _listRulesUsed;
+		}
+
+		private static List<int> OptimizeListRulesUsed(List<int> listRulesUsed, List<List<int>> rulesList)
+		{
+			if (listRulesUsed.Count == 0)
+				return listRulesUsed;
+
+			List<int> _listRulesOptimized = new List<int>();
+			int _currentRulePosition = listRulesUsed.Count - 1;
+
+			_listRulesOptimized.Add(listRulesUsed[_currentRulePosition]);
+
+			for (int i = listRulesUsed.Count - 2; i >= 0; i--)
+			{
+				for (int j = 0; j < Statics.ATTRIBUTE.Length; j++)
+				{
+					if (rulesList[listRulesUsed[i]][j] == Statics.IN_CONCLUSION && 
+						rulesList[_listRulesOptimized[_listRulesOptimized.Count - 1]][j] == Statics.IN_ASSUMPTIONS)
+					{
+						_currentRulePosition = i;
+						_listRulesOptimized.Add(listRulesUsed[_currentRulePosition]);
+
+						break;
+					}
+				}
+			}
+
+			_listRulesOptimized.Reverse();
+			return _listRulesOptimized;
+		}
+    }
 }
