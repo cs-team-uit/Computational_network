@@ -6,7 +6,7 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" FontWeight="Bold" WindowStartupLocation="CenterScreen" Title="Giải bài toán tam giác">
     <Grid>
         <DockPanel HorizontalAlignment="Left" Height="213" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="361">
-            <ComboBox VerticalAlignment="Stretch" Width="119" Margin="0,91,0,100" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBox VerticalAlignment="Stretch" Width="119" Margin="0,91,0,100">
                 <ComboBoxItem Content="a" HorizontalAlignment="Left" Width="117"/>
                 <ComboBoxItem Content="b" HorizontalAlignment="Left" Width="117"/>
                 <ComboBoxItem Content="c" HorizontalAlignment="Left" Width="117"/>
