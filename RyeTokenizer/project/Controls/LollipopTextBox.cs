@@ -21,6 +21,7 @@ public class LollipopTextBox : Control
     bool readOnly;
     bool previousReadOnly;
     bool multiline;
+	bool wordwrap;
     bool isPasswordMasked = false;
     bool Enable = true;
 
@@ -162,7 +163,27 @@ public class LollipopTextBox : Control
         }
     }
 
-    [Category("Appearance")]
+	[DisplayName("WordWrap")]
+	[Category("Behavior")]
+	public bool WordWrap
+	{
+		get
+		{
+			return wordwrap;
+		}
+		set
+		{
+			wordwrap = value;
+			if (LollipopTB != null)
+			{
+				LollipopTB.WordWrap = value;
+			}
+
+			Invalidate();
+		}
+	}
+
+	[Category("Appearance")]
     public string FocusedColor
     {
         get { return focusColor; }
@@ -204,6 +225,11 @@ public class LollipopTextBox : Control
         get { return base.ForeColor; }
         set { base.ForeColor = value; }
     }
+
+	public string[] Lines
+	{
+		get { return Text.Split('\n'); }
+	}
 
     #endregion
     #region  Events
@@ -277,7 +303,7 @@ public class LollipopTextBox : Control
         LollipopTB.UseSystemPasswordChar = UseSystemPasswordChar;
         LollipopTB.Multiline = false;
         LollipopTB.BackColor = Color.FromArgb(255, 255, 255);
-        LollipopTB.ScrollBars = ScrollBars.None;
+		LollipopTB.ScrollBars = ScrollBars.Vertical;
         LollipopTB.KeyDown += OnKeyDown;
 
         LollipopTB.GotFocus += (sender, args) => Focus = true; AnimationTimer.Start();

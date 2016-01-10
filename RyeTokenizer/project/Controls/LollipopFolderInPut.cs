@@ -208,7 +208,11 @@ public class LollipopFolderInPut : Control
     {
         Dialog = new FolderBrowserDialog();
         Dialog.ShowDialog();
-        Text = Dialog.SelectedPath;
+
+        string path = Dialog.SelectedPath;
+		if (path != "")
+			Text = path;
+
         Focus();
     }
     protected override void OnTextChanged(System.EventArgs e)
