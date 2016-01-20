@@ -17,32 +17,26 @@ namespace ComputationalNetwork
 		public string m_results;
 
 		Compute m_compute;
-		RichTextBox m_require;
 
-		public Presentation(Compute _cal, List<int> assumptions, int conclusion, ref RichTextBox richTextBox)
+		public Presentation(Compute compute, List<int> assumptions, int conclusion)
 		{
-			m_compute = _cal;
+			m_compute = compute;
 			m_assumptions = assumptions;
 			m_conclusion = conclusion;
 
 			m_requirements = "";
 			m_results = "";
-
-			m_require = richTextBox;
 		}
 
 		public void Resolve()
 		{
-			representRequirements();
-			representSolutions();
+			RepresentRequirements();
+			RepresentSolutions();
 		}
 
-		private void representRequirements()
+		private void RepresentRequirements()
 		{
-			m_require.SelectionColor = Color.Red;
-			m_require.AppendText("Bài toán Tam giác\n");
-
-			m_requirements += "Bài toán Tam giác\n"
+			m_requirements += "Bài toán Tam giác\n\n"
 				+ "Giả thiết: \n";
 			for (int i = 0; i < Statics.ATTRIBUTE.Length; i++)
 			{
@@ -51,47 +45,47 @@ namespace ComputationalNetwork
 					switch (i)
 					{
 						case 0:
-							m_requirements += "- Góc A: "
+							m_requirements += "- Góc A = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 1:
-							m_requirements += "- Góc B: "
+							m_requirements += "- Góc B = \t\t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 2:
-							m_requirements += "- Góc C: "
+							m_requirements += "- Góc C = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 3:
-							m_requirements += "- Cạnh a: "
+							m_requirements += "- Cạnh a = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 4:
-							m_requirements += "- Cạnh b: "
+							m_requirements += "- Cạnh b = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 5:
-							m_requirements += "- Cạnh c: "
+							m_requirements += "- Cạnh c = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 6:
-							m_requirements += "- Chiều cao ha: "
+							m_requirements += "- Chiều cao ha = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 7:
-							m_requirements += "- Chiều cao hb: "
+							m_requirements += "- Chiều cao hb = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 8:
-							m_requirements += "- Chiều cao hc: "
+							m_requirements += "- Chiều cao hc = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 9:
-							m_requirements += "- Nửa chu vi p: "
+							m_requirements += "- Nửa chu vi p = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 						case 10:
-							m_requirements += "- Diện tích S: "
+							m_requirements += "- Diện tích S = \t"
 								+ m_compute.ListValues[i] + ".\n";
 							break;
 					}
@@ -103,48 +97,42 @@ namespace ComputationalNetwork
 			switch (m_conclusion)
 			{
 				case 0:
-					m_requirements += "- Tính góc A ?\n";
+					m_requirements += "- Tính góc A?\n";
 					break;
 				case 1:
-					m_requirements += "- Tính góc B ?\n";
+					m_requirements += "- Tính góc B?\n";
 					break;
 				case 2:
-					m_requirements += "- Tính góc C ?\n";
+					m_requirements += "- Tính góc C?\n";
 					break;
 				case 3:
-					m_requirements += "- Tính độ dài cạnh a ?\n";
+					m_requirements += "- Tính độ dài cạnh a?\n";
 					break;
 				case 4:
-					m_requirements += "- Tính độ dài cạnh b ?\n";
+					m_requirements += "- Tính độ dài cạnh b?\n";
 					break;
 				case 5:
-					m_requirements += "- Tính độ dài cạnh c ?\n";
+					m_requirements += "- Tính độ dài cạnh c?\n";
 					break;
 				case 6:
-					m_requirements += "- Tính độ dài đường cao ha ?\n";
+					m_requirements += "- Tính độ dài đường cao ha?\n";
 					break;
 				case 7:
-					m_requirements += "- Tính độ dài đường cao hb ?\n";
+					m_requirements += "- Tính độ dài đường cao hb?\n";
 					break;
 				case 8:
-					m_requirements += "- Tính độ dài đường cao hc ?\n";
+					m_requirements += "- Tính độ dài đường cao hc?\n";
 					break;
 				case 9:
-					m_requirements += "- Tính nửa chu vi tam giác p ?\n";
+					m_requirements += "- Tính nửa chu vi tam giác p?\n";
 					break;
 				case 10:
-					m_requirements += "- Tính diện tích tam giác S ?\n";
+					m_requirements += "- Tính diện tích tam giác S?\n";
 					break;
 			}
-
-			m_requirements += "\n\t Bài làm:\n\n";
-
-			//mainForm.RTB_Result.Text += _problemPresentation;
 		}
 
-		//Present Solution
-		//Forward Charning
-		private void representSolutions()
+		private void RepresentSolutions()
 		{
 			for (int i = 0; i < m_compute.m_listRulesUsed.Count; i++)
 			{
@@ -152,24 +140,27 @@ namespace ComputationalNetwork
 					m_results += "* Bước " + (i + 1) + ": ";
 				else
 					m_results += "* ";
+
 				for (int j = 0; j < Statics.ATTRIBUTE.Length; j++)
 				{
 					if (m_compute.m_listRules[m_compute.m_listRulesUsed[i]][j] == 1)
 					{
+						m_results += "Tính " + Statics.ATTRIBUTE_STR[j] + "\n";
+
 						switch (j)
 						{
 							case 0:
 								m_results += "Tính góc A\n"
-									+ "- Áp dụng công thức: A = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
-									+ "   Ta tính được: A = " + m_compute.ListValues[0] + "\n";
+									+ "- Từ công thức: A = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
+									+ "   Ta suy ra: A = " + m_compute.ListValues[0] + "\n";
 								if (i == m_compute.m_listRulesUsed.Count - 1)
 									m_results += "\nKết luận: Vậy giá trị của góc A cần tìm là "
 														+ m_compute.ListValues[0] + " độ.\n";
 								break;
 							case 1:
 								m_results += "Tính góc B\n"
-									+ "- Áp dụng công thức: B = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
-									+ "   Ta tính được: B = " + m_compute.ListValues[1] + "\n";
+									+ "- Ta có: B = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
+									+ "   Suy ra: B = " + m_compute.ListValues[1] + "\n";
 								if (i == m_compute.m_listRulesUsed.Count - 1)
 									m_results += "\nKết luận: Vậy giá trị của góc B cần tính là "
 														+ m_compute.ListValues[1] + " độ.\n";
@@ -184,24 +175,24 @@ namespace ComputationalNetwork
 								break;
 							case 3:
 								m_results += "Tính độ dài cạnh a\n"
-									+ "- Áp dụng công thức: a = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
-									+ "   Ta tính được: a = " + m_compute.ListValues[3] + "\n";
+									+ "- Ta có công thức: a = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
+									+ "   Suy ra: a = " + m_compute.ListValues[3] + "\n";
 								if (i == m_compute.m_listRulesUsed.Count - 1)
 									m_results += "\nKết luận: Vậy độ dài của cạnh a cần tính là "
 														+ m_compute.ListValues[3] + ".\n";
 								break;
 							case 4:
 								m_results += "Tính độ dài cạnh b\n"
-									+ "- Áp dụng công thức: b = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
-									+ "   Ta tính được: b = " + m_compute.ListValues[4] + "\n";
+									+ "- Ta có công thức: b = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
+									+ "   Suy ra: b = " + m_compute.ListValues[4] + "\n";
 								if (i == m_compute.m_listRulesUsed.Count - 1)
 									m_results += "\nKết luận: Vậy độ dài của cạnh b cần tính là "
 														+ m_compute.ListValues[4] + ".\n";
 								break;
 							case 5:
 								m_results += "Tính độ dài cạnh c\n"
-									+ "- Áp dụng công thức: c = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
-									+ "   Ta tính được: c = " + m_compute.ListValues[5] + "\n";
+									+ "- Ta có: c = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
+									+ "   Vậy: c = " + m_compute.ListValues[5] + "\n";
 								if (i == m_compute.m_listRulesUsed.Count - 1)
 									m_results += "\nKết luận: Vậy độ dài của cạnh c cần tính là "
 														+ m_compute.ListValues[5] + ".\n";
@@ -235,7 +226,7 @@ namespace ComputationalNetwork
 									+ "- Áp dụng công thức: p = " + getFormula(m_compute.m_listRulesUsed[i]) + "\n"
 									+ "   Ta tính được: p = " + m_compute.ListValues[9] + "\n";
 								if (i == m_compute.m_listRulesUsed.Count - 1)
-									m_results += "\nKết luận: Vậy giá trị của nửa chu vi tam giác p cần tính là "
+									m_results += "\nKết luận: Vậy giá trị của nửa chu vi p của tam giác cần tính là "
 														+ m_compute.ListValues[9] + ".\n";
 								break;
 							case 10:

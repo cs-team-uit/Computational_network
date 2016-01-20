@@ -39,6 +39,21 @@ namespace ComputationalNetwork
 			"S"
 		};
 
+		public static readonly string[] ATTRIBUTE_STR =
+		{
+			"Góc A",
+			"Góc B",
+			"Góc C",
+			"Cạnh a",
+			"Cạnh b",
+			"Cạnh c",
+			"Chiều cao ha",
+			"Chiều cao hb",
+			"Chiều cao hc",
+			"Nửa chu vi p",
+			"Diện tích S"
+		};
+
 		public static readonly int NOT_RELATE = -1;
 		public static readonly int IN_ASSUMPTIONS = 0;
 		public static readonly int IN_CONCLUSION = 1;

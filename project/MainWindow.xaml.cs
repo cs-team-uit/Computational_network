@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ComputationalNetwork
 {
@@ -56,14 +57,6 @@ namespace ComputationalNetwork
 
 				m_attributesInfo.Add(_attribute);
 			}
-
-			m_attributesInfo[0].m_value = "90";
-			m_attributesInfo[4].m_value = "3";
-			m_attributesInfo[5].m_value = "4";
-
-			m_attributesInfo[3].m_value = "?";
-
-			UpdateRequirements();
         }
 
 		private void UpdateRequirements()
@@ -90,11 +83,30 @@ namespace ComputationalNetwork
 
 		private void AddAttribute_Click(object sender, RoutedEventArgs e)
 		{
-			
+			if (txtbox_value.Text != "")
+			{
+				m_attributesInfo[cmb_attribute.SelectedIndex].m_value = txtbox_value.Text;
+
+				ComboBoxItem _selectedItem = (ComboBoxItem)(cmb_attribute.SelectedValue);
+				string _item = _selectedItem.Content.ToString() + " = " + txtbox_value.Text;
+
+				if (txtbox_value.Text == "?")
+					lstview_conclusions.Items.Add(_item);
+				else
+					lstview_assumptions.Items.Add(_item);
+
+				txtbox_value.Text = "";
+			}
+			else
+			{
+				MessageBox.Show("Please type in value for attribute!");
+			}
 		}
 
 		private void Go_Click(object sender, RoutedEventArgs e)
 		{
+			UpdateRequirements();
+
 			m_listRulesUsed.Clear();
 			List<int> _knownList = new List<int>(m_assumptions);
 
@@ -108,7 +120,7 @@ namespace ComputationalNetwork
 				m_compute = new Compute(m_attributesInfo, RulesList, m_listRulesUsed);
 				m_compute.ProcessCaculate();
 
-				m_presentation = new Presentation(m_compute, Assumptions, Conclusion, ref richTextBox);
+				m_presentation = new Presentation(m_compute, Assumptions, Conclusion);
 				m_presentation.Resolve();
 
 				Requirements.Text = m_presentation.m_requirements;
