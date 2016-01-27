@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ComputationalNetwork
 {
@@ -11,10 +7,14 @@ namespace ComputationalNetwork
 		public int m_attribute;
 		public string m_value;
 
+		public int m_listViewIndex;
+
 		public void Init(int id, string value)
 		{
 			m_attribute = id;
 			m_value = value;
+
+			m_listViewIndex = -1;
 		}
 	}
 

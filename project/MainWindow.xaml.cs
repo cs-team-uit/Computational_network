@@ -43,6 +43,7 @@ namespace ComputationalNetwork
 		Presentation	m_presentation;
 		Compute			m_compute;
 
+
 		public MainWindow()
         {
             InitializeComponent();
@@ -90,23 +91,85 @@ namespace ComputationalNetwork
 		{
 			float n;
 			bool isNumeric = float.TryParse(txtbox_value.Text, out n);
-			if (txtbox_value.Text != "" && (isNumeric == true || txtbox_value.Text == "?"))
+
+			try
 			{
-				m_attributesInfo[cmb_attribute.SelectedIndex].m_value = txtbox_value.Text;
+				if (txtbox_value.Text != "" && (isNumeric == true || txtbox_value.Text == "?"))
+				{
+					if (m_attributesInfo[cmb_attribute.SelectedIndex].m_value == null)
+					{
+						m_attributesInfo[cmb_attribute.SelectedIndex].m_value = txtbox_value.Text;
 
-				ComboBoxItem _selectedItem = (ComboBoxItem)(cmb_attribute.SelectedValue);
-				string _item = _selectedItem.Content.ToString() + " = " + txtbox_value.Text;
+						ComboBoxItem _selectedItem = (ComboBoxItem)(cmb_attribute.SelectedValue);
+						string _item = _selectedItem.Content.ToString() + " = " + txtbox_value.Text;
 
-				if (txtbox_value.Text == "?")
-					lstview_conclusions.Items.Add(_item);
-				else
-					lstview_assumptions.Items.Add(_item);
+						if (txtbox_value.Text == "?")
+						{
+							lstview_conclusions.Items.Add(_item);
+							m_attributesInfo[cmb_attribute.SelectedIndex].m_listViewIndex = lstview_conclusions.Items.Count - 1;
+						}
+						else
+						{
+							lstview_assumptions.Items.Add(_item);
+							m_attributesInfo[cmb_attribute.SelectedIndex].m_listViewIndex = lstview_assumptions.Items.Count - 1;
+						}
+					}
+					else
+					{
+						m_attributesInfo[cmb_attribute.SelectedIndex].m_value = txtbox_value.Text;
 
-				txtbox_value.Text = "";
+						ComboBoxItem _selectedItem = (ComboBoxItem)(cmb_attribute.SelectedValue);
+						string _item = _selectedItem.Content.ToString() + " = " + txtbox_value.Text;
+
+						if (txtbox_value.Text == "?")
+						{
+							lstview_conclusions.Items.RemoveAt(m_attributesInfo[cmb_attribute.SelectedIndex].m_listViewIndex);
+							RefreshListViewIndex(m_attributesInfo[cmb_attribute.SelectedIndex].m_listViewIndex, true);
+
+							lstview_conclusions.Items.Add(_item);
+							m_attributesInfo[cmb_attribute.SelectedIndex].m_listViewIndex = lstview_conclusions.Items.Count - 1;
+						}
+						else
+						{
+							lstview_assumptions.Items.RemoveAt(m_attributesInfo[cmb_attribute.SelectedIndex].m_listViewIndex);
+							RefreshListViewIndex(m_attributesInfo[cmb_attribute.SelectedIndex].m_listViewIndex, false);
+
+							lstview_assumptions.Items.Add(_item);
+							m_attributesInfo[cmb_attribute.SelectedIndex].m_listViewIndex = lstview_assumptions.Items.Count - 1;
+						}
+					}
+
+					txtbox_value.Text = "";
+				}
+				else if (!isNumeric)
+				{
+					MessageBox.Show("Value must be number!");
+				}
 			}
-			else if (!isNumeric)
+			catch
 			{
-				MessageBox.Show("Value must be number!");
+
+			}
+		}
+
+		private void RefreshListViewIndex(int startIndex, bool refreshConclusion = false)
+		{
+			foreach(Attribute _attr in m_attributesInfo)
+			{
+				if (refreshConclusion)
+				{
+					if(_attr.m_value == "?" && _attr.m_listViewIndex > startIndex)
+					{
+						_attr.m_listViewIndex--;
+					}
+				}
+				else
+				{
+					if (_attr.m_value != "?" && _attr.m_listViewIndex > startIndex)
+					{
+						_attr.m_listViewIndex--;
+					}
+				}
 			}
 		}
 
