@@ -1,40 +1,37 @@
 ﻿<Window x:Class="ComputationalNetwork.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="472.388" Width="771.269"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="480" Width="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" FontWeight="Bold" WindowStartupLocation="CenterScreen" Title="Giải bài toán tam giác">
-    <Grid>
-        <DockPanel HorizontalAlignment="Left" Height="213" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="361">
-            <ComboBox x:Name="cmb_attribute" VerticalAlignment="Stretch" Width="119" Margin="25,95,0,95" HorizontalAlignment="Left" Padding="6,3,20,3" SelectedIndex="0">
-                <ComboBoxItem Content="A" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="B" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="C" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="a" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="b" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="c" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="ha" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="hb" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="hc" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="p" HorizontalAlignment="Left" Width="117"/>
-                <ComboBoxItem Content="S" HorizontalAlignment="Left" Width="117"/>
+    <Grid Height="480" VerticalAlignment="Bottom">
+        <DockPanel HorizontalAlignment="Left" Width="400" Height="240" LastChildFill="False" Margin="0,0,0,0" VerticalAlignment="Top">
+            <ComboBox x:Name="cmb_attribute" Width="120" Height="25" Margin="70,0,0,0" SelectedIndex="0">
+                <ComboBoxItem Content="A" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="B" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="C" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="a" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="b" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="c" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="ha" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="hb" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="hc" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="p" HorizontalAlignment="Left" Width="120"/>
+                <ComboBoxItem Content="S" HorizontalAlignment="Left" Width="120"/>
             </ComboBox>
-            <Label Content="=" Margin="25,95,0,95" RenderTransformOrigin="0.5,0.5" Width="21"/>
-            <TextBox x:Name="txtbox_value" TextWrapping="Wrap" Text="" Width="120" Margin="25,95,0,95"/>
+            <Label Content="=" Width="20" Height="25"/>
+            <TextBox x:Name="txtbox_value" Width="120" Height="25"/>
         </DockPanel>
-        <DockPanel HorizontalAlignment="Left" Height="214" LastChildFill="False" Margin="-5,220,0,0" VerticalAlignment="Top" Width="377"/>
-        <DockPanel HorizontalAlignment="Left" Height="203" LastChildFill="False" Margin="376,228,0,0" VerticalAlignment="Top" Width="377">
-            <TextBox x:Name="Results" Height="178" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="377" Margin="0,25,0,0" IsReadOnly="True"/>
-        </DockPanel>
-        <DockPanel HorizontalAlignment="Left" Height="202" LastChildFill="False" Margin="382,22,0,0" VerticalAlignment="Top" Width="360">
-            <ListView x:Name="lstview_assumptions" Height="175" VerticalAlignment="Top" Width="201" Margin="0,28,0,0">
+
+        <DockPanel HorizontalAlignment="Left" Width="400" Height="240" LastChildFill="False" Margin="400,0,0,0" VerticalAlignment="Top">
+            <ListView x:Name="lstview_assumptions" Height="180" VerticalAlignment="Bottom" Width="180" Margin="10,0,0,0">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListView x:Name="lstview_conclusions" Height="175" VerticalAlignment="Top" Width="156" Margin="0,28,0,0">
+            <ListView x:Name="lstview_conclusions" Height="180" VerticalAlignment="Bottom" Width="180">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn/>
@@ -42,14 +39,24 @@
                 </ListView.View>
             </ListView>
         </DockPanel>
+
+        <DockPanel HorizontalAlignment="Left" Width="400" Height="240" LastChildFill="False" Margin="0,240,0,0" VerticalAlignment="Top">
+            <TextBox x:Name="Requirements" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" IsReadOnly="True" Height="200" Width="380" Margin="10,0,0,0"/>
+        </DockPanel>
+
+        <DockPanel HorizontalAlignment="Left" Width="400" Height="240" LastChildFill="False" Margin="400,240,0,0" VerticalAlignment="Top">
+            <TextBox x:Name="Results" Height="200" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" IsReadOnly="True" Width="380" Margin="10,0,0,0"/>
+        </DockPanel>
+
         <Label Content="Thêm yếu tố tam giác" Height="29" Margin="120,51,0,0" Width="148" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button x:Name="AddAttribute" Content="Thêm" HorizontalAlignment="Left" Margin="78,164,0,0" VerticalAlignment="Top" Width="75" Click="AddAttribute_Click" RenderTransformOrigin="-0.16,-0.389"/>
-        <Label Content="Kết quả" HorizontalAlignment="Left" Margin="4,222,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label Content="Giả thiết" HorizontalAlignment="Left" Margin="385,34,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label Content="Các bước giải" HorizontalAlignment="Left" Margin="389,236,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Button x:Name="Go" Content="Giải" HorizontalAlignment="Left" Margin="234,164,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignRaisedDarkButton}" Click="Go_Click"/>
-        <Label Content="Kết luận" HorizontalAlignment="Left" Margin="582,30,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBox x:Name="Requirements" Height="186" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="6,244,397,0" IsReadOnly="True"/>
+        <Button x:Name="AddAttribute" Content="Thêm" HorizontalAlignment="Left" Margin="63,164,0,0" VerticalAlignment="Top" Width="75" Click="AddAttribute_Click" RenderTransformOrigin="-0.16,-0.389"/>
+        <Label Content="Mô tả bài toán" HorizontalAlignment="Left" Margin="10,256,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label Content="Giả thiết" HorizontalAlignment="Left" Margin="410,35,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label Content="Các bước giải" HorizontalAlignment="Left" Margin="410,256,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Button x:Name="Go" Content="Giải" HorizontalAlignment="Left" Margin="155,164,0,0" VerticalAlignment="Top" Width="75" Click="Go_Click"/>
+        <Label Content="Kết luận" HorizontalAlignment="Left" Margin="590,35,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+        <Button x:Name="Clear" Content="Xoá" HorizontalAlignment="Left" Margin="248,164,0,0" VerticalAlignment="Top" Width="75" Click="Clear_Click"/>
 
     </Grid>
 </Window>

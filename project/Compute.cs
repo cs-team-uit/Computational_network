@@ -47,7 +47,7 @@ namespace ComputationalNetwork
 
 			for (int i = 0; i < m_listRulesUsed.Count; i++)
 			{
-				string _postfixFomular = convertToPostfixExpression(m_listRulesUsed[i]);
+				string _postfixFomular = ConvertToPostfixExpression(m_listRulesUsed[i]);
 				int _currentPosition = 0;
 
 				for (int j = 0; j < _postfixFomular.Length; j++)
@@ -111,7 +111,7 @@ namespace ComputationalNetwork
 			}
 		}
 
-		private string convertToPostfixExpression(int expressionIndex)
+		private string ConvertToPostfixExpression(int expressionIndex)
 		{
 			Stack<string> _stackStr = new Stack<string>();
 			

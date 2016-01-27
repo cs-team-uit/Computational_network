@@ -83,7 +83,9 @@ namespace ComputationalNetwork
 
 		private void AddAttribute_Click(object sender, RoutedEventArgs e)
 		{
-			if (txtbox_value.Text != "")
+			float n;
+			bool isNumeric = float.TryParse(txtbox_value.Text, out n);
+			if (txtbox_value.Text != "" && (isNumeric == true || txtbox_value.Text == "?"))
 			{
 				m_attributesInfo[cmb_attribute.SelectedIndex].m_value = txtbox_value.Text;
 
@@ -97,9 +99,9 @@ namespace ComputationalNetwork
 
 				txtbox_value.Text = "";
 			}
-			else
+			else if (!isNumeric)
 			{
-				MessageBox.Show("Please type in value for attribute!");
+				MessageBox.Show("Value must be number!");
 			}
 		}
 
@@ -130,6 +132,11 @@ namespace ComputationalNetwork
 			{
 				MessageBox.Show("Dữ liệu đầu vào không đủ, vui lòng cung cấp thêm để thực hiện bài toán!", "Warning");
 			}
+		}
+
+		private void Clear_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }
