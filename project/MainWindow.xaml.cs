@@ -57,7 +57,13 @@ namespace ComputationalNetwork
 
 				m_attributesInfo.Add(_attribute);
 			}
-        }
+
+			AddAttribute.IsEnabled = true;
+			Go.IsEnabled = true;
+
+			cmb_attribute.IsEnabled = true;
+			txtbox_value.IsEnabled = true;
+		}
 
 		private void UpdateRequirements()
 		{
@@ -80,8 +86,7 @@ namespace ComputationalNetwork
 			}
 		}
 
-
-		private void AddAttribute_Click(object sender, RoutedEventArgs e)
+		private void AddNewAttribute()
 		{
 			float n;
 			bool isNumeric = float.TryParse(txtbox_value.Text, out n);
@@ -103,6 +108,12 @@ namespace ComputationalNetwork
 			{
 				MessageBox.Show("Value must be number!");
 			}
+		}
+
+
+		private void AddAttribute_Click(object sender, RoutedEventArgs e)
+		{
+			AddNewAttribute();
 		}
 
 		private void Go_Click(object sender, RoutedEventArgs e)
@@ -127,6 +138,12 @@ namespace ComputationalNetwork
 
 				Requirements.Text = m_presentation.m_requirements;
 				Results.Text = m_presentation.m_results;
+
+				AddAttribute.IsEnabled = false;
+				Go.IsEnabled = false;
+
+				cmb_attribute.IsEnabled = false;
+				txtbox_value.IsEnabled = false;
 			}
 			else
 			{
@@ -136,7 +153,27 @@ namespace ComputationalNetwork
 
 		private void Clear_Click(object sender, RoutedEventArgs e)
 		{
+			AddAttribute.IsEnabled = true;
+			Go.IsEnabled = true;
 
+			cmb_attribute.IsEnabled = true;
+			txtbox_value.IsEnabled = true;
+
+			lstview_assumptions.Items.Clear();
+			lstview_conclusions.Items.Clear();
+		}
+
+		private void cmb_attribute_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			
+		}
+
+		private void txtbox_value_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+		{
+			if(e.Key == System.Windows.Input.Key.Enter)
+			{
+				AddNewAttribute();
+			}
 		}
 	}
 }
