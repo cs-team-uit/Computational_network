@@ -60,7 +60,7 @@ namespace ComputationalNetwork
 					{
 						m_results += "Tính " + Statics.ATTRIBUTE_STR[j] + "\n";
 						m_results += "- Từ công thức: " + Statics.ATTRIBUTE[j] + " = " + GetFormula(m_compute.m_listRulesUsed[i]) + "\n"
-									+ "   Ta suy ra: " + Statics.ATTRIBUTE[j] + " = " + m_compute.ListValues[j] + "\n";
+									+ "   Ta suy ra: " + Statics.ATTRIBUTE_STR[j] + " = " + m_compute.ListValues[j] + "\n";
 
 						if (i == m_compute.m_listRulesUsed.Count - 1)
 							m_results += "\nKết luận: Vậy giá trị của " + Statics.ATTRIBUTE_STR[j] + " cần tìm là "

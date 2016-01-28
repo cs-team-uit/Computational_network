@@ -224,6 +224,17 @@ namespace ComputationalNetwork
 
 			lstview_assumptions.Items.Clear();
 			lstview_conclusions.Items.Clear();
+
+			m_assumptions.Clear();
+			m_attributesInfo.Clear();
+
+			for (int i = 0; i < Statics.ATTRIBUTE.Length; i++)
+			{
+				Attribute _attribute = new Attribute();
+				_attribute.Init(i, null);
+
+				m_attributesInfo.Add(_attribute);
+			}
 		}
 
 		private void cmb_attribute_SelectionChanged(object sender, SelectionChangedEventArgs e)
